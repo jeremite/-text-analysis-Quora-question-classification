@@ -1,3 +1,3 @@
-# -text-analysis-Quora-question-classification
-use machine learning to get a comparable results with the state of art deep leanring technique; <\br>
-(continueing) try lstm and attention model on the problem.
+# text-analysis-Quora-question-classification
+In the file ML-quora, explored machine learning methods (merged NaiveBayes+Logistic regression) to get a comparable results with the state of art deep leanring technique; </br>
+In the file DL-quora, used word-embedding and LSTM to train the model.
