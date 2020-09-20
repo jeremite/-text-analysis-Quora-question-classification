@@ -28,6 +28,32 @@ val df = spark.read.format(file_type)
 
 val df_used =df.filter($"question_text".isNotNull)
 
+
+val tokenizer = new Tokenizer()
+  .setInputCol("text")
+  .setOutputCol("words")
+val remover = new StopWordsRemover()
+  .setInputCol("words")
+  .setOutputCol("filteredWords")
+
+val hashingTF = new HashingTF()
+  .setNumFeatures(100)
+  .setInputCol("filteredWords")
+  .setOutputCol("rawFeatures")
+val idf = new IDF()
+  .setInputCol("rawFeatures")
+  .setOutputCol("features")
+
+val pipeline = new Pipeline()
+  .setStages(Array(tokenizer,remover, hashingTF, idf))
+
+// Fit the pipeline to training documents.
+val model = pipeline.fit(df_used)
+val train_out = model.transform(df_used)
+  .selectExpr("id","text","features")
+
+
+/*
 // COMMAND ----------
 
 val tokenizer = new Tokenizer().setInputCol("question_text").setOutputCol("words")
@@ -57,4 +83,4 @@ featuresDF.select("question_text","features").show()
 
 // COMMAND ----------
 
-
+*/
